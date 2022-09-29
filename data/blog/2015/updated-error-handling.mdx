@@ -1,0 +1,146 @@
+---
+title: "Updated error handling"
+date: "2015-02-10"
+tags: ['uom','uom-mvc']
+draft: false
+---
+
+In [Managing Errors in MVC](https://mikebarram.wordpress.com/2015/01/14/managing-errors-in-mvc/) I got close to having record level error handling working as I wanted but I had to create a view for each error when usually the error is a single line of text that could be stored in a config file.
+
+Based on my original code and http://weblogs.asp.net/gunnarpeipman/asp-net-mvc-3-creating-httpstatuscoderesult-with-view-based-body
+
+**Helpers\\ExceptionHelper.cs**
+```C#
+using System;
+using System.Linq.Expressions;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
+using System.Collections;
+using System.Collections.Generic;
+ 
+namespace MyProject
+{
+    public class ExceptionHelper : ViewResult
+    {
+        private ExceptionName \_exceptionName;
+        private HttpStatusCode? \_statusCode;
+        private bool? \_logException;
+ 
+        public ExceptionHelper(ExceptionName exceptionName, HttpStatusCode? statusCode = null, bool? logException = null)
+        {
+            \_exceptionName = exceptionName;
+            \_statusCode = statusCode;
+            \_logException = logException;
+        }
+ 
+        public override void ExecuteResult(ControllerContext context)
+        {
+            HttpStatusCode returnStatusCode = HttpStatusCode.BadRequest;
+            bool returnLogException = true;
+            string ExceptionDescription = string.Empty;
+            string sViewName = "Exceptions/\_GenericException";
+ 
+            var httpContext = context.HttpContext;
+            var response = httpContext.Response;
+ 
+            // get the defaults for this exception
+            ExceptionActions theseExceptionActions;
+            if (ExceptionDefaults.TryGetValue(\_exceptionName, out theseExceptionActions))
+            {
+                if (theseExceptionActions.UseCustomView)
+                {
+                    sViewName = "Exceptions/" + \_exceptionName.ToString();
+                }
+ 
+                ExceptionDescription = theseExceptionActions.ExceptionDescription;
+ 
+                if (null == \_statusCode)
+                {
+                    returnStatusCode = theseExceptionActions.StatusCode;
+                }
+                else
+                {
+                    returnStatusCode = (HttpStatusCode)\_statusCode;
+                }
+ 
+                if (null == \_logException)
+                {
+                    returnLogException = theseExceptionActions.LogException;
+                }
+                else
+                {
+                    returnLogException = (bool)\_logException;
+                }
+            }
+ 
+            response.StatusCode = (int)returnStatusCode;
+            response.StatusDescription = ExceptionDescription;
+            ViewBag.ExceptionDescription = ExceptionDescription;
+            ViewName = sViewName;
+ 
+            if (returnLogException)
+            {
+                // log the exception
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(\_exceptionName.ToString()));
+            }
+ 
+            base.ExecuteResult(context);
+        }
+ 
+ 
+        public enum ExceptionName
+        {
+            DataNotValid,
+            NoPermissionToManageThisPerson,
+            NoPermissionToManageThisProject,
+            RecordNotFound,
+            RecordNotSpecified
+        };
+ 
+        /// <summary>
+        /// Most exceptions will have UseCustomView=false, so the ExceptionDescription will be used for the error message that is displayed in the \_GenericException view
+        /// If a custom view is required, it will have the name of the exception
+        /// </summary>
+        public struct ExceptionActions
+        {
+            public bool UseCustomView;
+            public HttpStatusCode StatusCode;
+            public bool LogException;
+            public string ExceptionDescription;
+        }
+ 
+        public static Dictionary<ExceptionName, ExceptionActions\> ExceptionDefaults = new Dictionary<ExceptionName, ExceptionActions\>()
+        {
+            {ExceptionName.DataNotValid, new ExceptionActions {UseCustomView = false, StatusCode = HttpStatusCode.BadRequest, LogException = true, ExceptionDescription = "Data provided was not valid"}},
+            {ExceptionName.NoPermissionToManageThisPerson, new ExceptionActions {UseCustomView = false, StatusCode = HttpStatusCode.Forbidden, LogException = false, ExceptionDescription = "You don't have permission to manage this person"}},
+            {ExceptionName.NoPermissionToManageThisProject, new ExceptionActions {UseCustomView = false, StatusCode = HttpStatusCode.Forbidden, LogException = false, ExceptionDescription = "You don't have permission to manage this project"}},
+            {ExceptionName.RecordNotFound, new ExceptionActions {UseCustomView = false, StatusCode = HttpStatusCode.NotFound, LogException = false, ExceptionDescription = "Record was not found"}},
+            {ExceptionName.RecordNotSpecified, new ExceptionActions {UseCustomView = false, StatusCode = HttpStatusCode.BadRequest, LogException = false, ExceptionDescription = "Record not specified - one or more identifiers were missing"}},
+        };
+    }
+}
+```
+
+**Views\\Shared\\Exceptions\\\_GenericException.cshtml**
+```C#:
+@{
+    ViewBag.Title = ViewBag.ExceptionDescription;
+    Layout = "~/Views/Shared/\_Layout.cshtml";
+}
+ 
+<div class\="alert alert-warning"\>
+    <h2\>Error</h2\>
+    <p\>@ViewBag.ExceptionDescription</p\>
+</div\>
+
+**In a controller**
+
+if (!model.CanUserEdit()) return new ExceptionHelper(ExceptionHelper.ExceptionName.NoPermissionToManageThisProject);
+```
+
+This will return the \_GenericException.cshtml view with the message “You don’t have permission to manage this project” and the status code Forbidden. In this case, Elmah won’t log the error but you could easily log it with:
+```C#:
+if (!model.CanUserEdit()) return new ExceptionHelper(ExceptionHelper.ExceptionName.NoPermissionToManageThisProject, true);
+```

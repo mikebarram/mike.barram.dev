@@ -1,0 +1,9 @@
+---
+title: "Display multiple fields in one GridView column e.g. forename and surname"
+date: "2011-05-11"
+tags: ['uom', 'uom-nettiers']
+draft: false
+---
+```
+<data:HyperLinkField HeaderText="User" DataNavigateUrlFormatString="UserDetailEdit.aspx?Userid={0}" DataNavigateUrlFields="Userid" DataContainer="UseridSource" DataTextField="FName,LName" DataTextFormatString="{0} {1}" />
+```

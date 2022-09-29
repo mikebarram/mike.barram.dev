@@ -1,0 +1,41 @@
+---
+title: "Frameworks for Rich Internet Applications"
+date: "2014-01-13"
+tags: ['uom', 'uom-js', 'uom-training-hour']
+draft: false
+---
+
+Reading to do relating to frameworks for Rich Internet Applications…
+
+Visual Studio 2013 bundles Knockout.js, which looks fairly straightforward (I hope)
+
+Postal could be a better way of handling the events [https://github.com/postaljs/postal.js](https://github.com/postaljs/postal.js)
+
+Need to make sure our applications are accessible:  [http://stackoverflow.com/questions/7370056/accessibility-and-all-these-javascript-frameworks](http://stackoverflow.com/questions/7370056/accessibility-and-all-these-javascript-frameworks)
+
+With Knockout, you can pass the server side model to the client like this:
+
+```HTML
+<script>
+    ko.applyBindings(@Html.ToJSON(Model));
+</script>
+```
+
+Comparison of frameworks  
+[http://blog.stevensanderson.com/2012/08/01/rich-javascript-applications-the-seven-frameworks-throne-of-js-2012/](http://blog.stevensanderson.com/2012/08/01/rich-javascript-applications-the-seven-frameworks-throne-of-js-2012/)
+
+Yet more from the good people of Twitter [http://twitter.github.io/hogan.js/](http://twitter.github.io/hogan.js/). This is  a compiler for [{{mustache}}](http://mustache.github.io/), which is a templating language that can convert JSON to HTML in a similar way to Razor converting entities to HTML in ASP.Net. Useful if you want to say generate whole data grids on the client. If your server is getting JSON from elsewhere and you want to template it into HTML, you can use mustache templates on the server (rather than client) using [https://github.com/jdiamond/Nustache](https://github.com/jdiamond/Nustache)
+
+[http://www.asp.net/single-page-application/overview/introduction/knockoutjs-template](http://www.asp.net/single-page-application/overview/introduction/knockoutjs-template)
+
+**TypeScript**
+
+[http://channel9.msdn.com/posts/Anders-Hejlsberg-Introducing-TypeScript](http://channel9.msdn.com/posts/Anders-Hejlsberg-Introducing-TypeScript)
+
+[http://www.dotnetcurry.com/showarticle.aspx?ID=939](http://www.dotnetcurry.com/showarticle.aspx?ID=939)
+
+**Durandal**
+
+[http://durandaljs.com/](http://durandaljs.com/)
+
+[http://herdingcode.com/herding-code-182-durandal-kickstarter-with-rob-eisenberg/](http://herdingcode.com/herding-code-182-durandal-kickstarter-with-rob-eisenberg/) (Notes here: [http://lazycoder.com/weblog/](http://lazycoder.com/weblog/))

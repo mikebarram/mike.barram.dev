@@ -1,0 +1,16 @@
+---
+title: "Index was outside the bounds of the array"
+date: "2010-11-02"
+tags: ['uom', 'uom-nettiers']
+draft: false
+---
+
+If you’re getting errors like this back from NetTiers it’s probably because you’ve added a column to a table but not updated the NetTiers generated stored procedures that relate to that table:
+```
+Error Message:Index was outside the bounds of the array.
+
+Stack Trace: at System.Data.SqlClient.SqlDataReader.ReadColumn(Int32 i, Boolean setTimeout)  
+at System.Data.SqlClient.SqlDataReader.GetValueInternal(Int32 i)  
+at System.Data.SqlClient.SqlDataReader.GetValue(Int32 i)  
+at System.Data.SqlClient.SqlDataReader.get\_Item(Int32 i)
+```

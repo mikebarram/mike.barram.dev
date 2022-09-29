@@ -1,0 +1,40 @@
+---
+title: "displaying child records in a grid"
+date: "2011-05-18"
+tags: ['uom', 'uom-nettiers']
+draft: false
+---
+
+Suppose you have a grid of orders and in each row that shows an order you want to show the list of items. You can do this by deeploading the collection of items:
+
+```
+<data:OrderDataSource ID="OrderDataSource" runat="server" SelectMethod="Order_GetAll" EnableDeepLoad="True">  
+  <DeepLoadProperties Method="IncludeChildren" Recursive="False">  
+   <Types>  
+      <data:OrderProperty Name="OrderItemCollection" />  
+    </Types>  
+  </DeepLoadProperties>  
+<data:OrderDataSource>
+
+<data:EntityGridView ID="gvOrders" runat="server" AutoGenerateColumns="False" DataKeyNames="Orderid">  
+  <Columns>  
+    <asp:TemplateField HeaderText="Items">  
+      <ItemTemplate>  
+        <asp:GridView runat="server" ID="gvItems" DataSource='<%# Eval("OrderItemCollection") %>’ ShowHeader="false" AutoGenerateColumns="false">  
+          <Columns>  
+            <asp:BoundField DataField="Item" HeaderText="Item" />  
+          </Columns>  
+          <EmptyDataTemplate>  
+            no items  
+          </EmptyDataTemplate>  
+        </asp:GridView>  
+      </ItemTemplate>  
+    </asp:TemplateField>  
+  </Columns>  
+  <EmptyDataTemplate>  
+    No orders  
+  </EmptyDataTemplate>  
+</data:EntityGridView>
+```
+
+This is shown here: [http://community.codesmithtools.com/nettiers/f/33/p/3876/15979.aspx](http://community.codesmithtools.com/nettiers/f/33/p/3876/15979.aspx)

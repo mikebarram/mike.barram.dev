@@ -1,0 +1,30 @@
+---
+title: "Sensible field names in your database"
+date: "2011-02-01"
+tags: ['uom', 'uom-nettiers']
+draft: false
+---
+
+If it isn’t there already, netTiers creates a mapping file (named in the 2nd setting in the netTiers configuration) to set aliases for table and field names. Generate the project to get a default mapping file and then modify it. You may be best to save it under a different name and point the project at it – not sure. Apparently this supersedes the alias file specified in section 9.
+
+netTiers has a good go at converting field names to friendly names, so you don’t have to set any aliases manually if you name your fields correctly. netTiers will look for capitals to split field names into words e.g.
+
+```
+<Column Id="meddraPT" CSType="System.String" PropertyName="MeddraPt" FieldName="_meddraPt" FriendlyName="Meddra Pt" IncludeInOutput="true" />
+```
+
+So, if userid was named UserId or userID, the friendly name would be “User Id" rather than Userid
+
+```
+<Column Id="userid" CSType="System.Guid" PropertyName="Userid" FieldName="_userid" FriendlyName="Userid" IncludeInOutput="true" />
+```
+
+I don’t think there’s a way (other than changing the templates) of only having the first word begin with a capital letter.
+
+You can choose whether to use an alias file (simple) or mapping file (more complicated/powerful) by setting NameConversion in Section 02 to Alias or Mapping as described here:
+
+[http://community.codesmithtools.com/nettiers/f/30/p/5453/21624.aspx#21624](http://community.codesmithtools.com/nettiers/f/30/p/5453/21624.aspx#21624)
+
+Information on re-setting aliases if you change the database schema:
+
+[http://nettiers.com/TemplateRegeneration.ashx](http://nettiers.com/TemplateRegeneration.ashx)

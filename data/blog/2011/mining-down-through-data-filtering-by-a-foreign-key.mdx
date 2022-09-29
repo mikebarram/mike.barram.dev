@@ -1,0 +1,14 @@
+---
+title: "mining down through data – filtering by a foreign key"
+date: "2011-02-09"
+tags: ['uom', 'uom-nettiers']
+draft: false
+---
+
+The generated netTiers admin pages just let you view/manage all records in a table and navigate between related tables. It doesn’t let you mine down. If you had a record collection project with a bands table and a child records table, you could view all bands and all records but can’t mine down from a band view all records by that a selected band.
+
+To view the list of records only by a selected band, the datasource needs to have the SelectMethod changed from the default ```"GetPaged"``` to ```"GetByBandId"``` (assuming the BandRecords table has a BandId foreign key). Only records by the selected band will be retrieved from the database.
+
+The method described here  
+[http://weblogs.asp.net/lhunt/archive/2006/10/16/NetTiers-GridViewSearchPanel.aspx](http://weblogs.asp.net/lhunt/archive/2006/10/16/NetTiers-GridViewSearchPanel.aspx)  
+will have a similar filtering effect but all records will be retrieved from the database before filtering. They will probably be stored in the ViewState too.

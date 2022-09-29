@@ -1,0 +1,20 @@
+---
+title: "only use standard data types"
+date: "2011-02-09"
+tags: ['uom', 'uom-nettiers'] 
+draft: false
+---
+
+Only use standard data types. Don’t accidentally use the Date data type (new to SQL Server 2008)
+
+This will list all columns and their data types:
+
+```SQL
+SELECT C.TABLE_NAME, C.COLUMN_NAME, C.DATA_TYPE, C.CHARACTER_OCTET_LENGTH
+FROM INFORMATION_SCHEMA.COLUMNS AS C
+  JOIN INFORMATION_SCHEMA.TABLES AS T
+  ON C.TABLE_CATALOG = T.TABLE_CATALOG
+    AND C.TABLE_SCHEMA = T.TABLE_SCHEMA
+    AND C.TABLE_NAME = T.TABLE_NAME
+WHERE T.TABLE_TYPE = ‘BASE TABLE’
+ORDER BY C.DATA_TYPE, C.TABLE_NAME, C.COLUMN_NAME;

@@ -1,0 +1,17 @@
+---
+title: "Not paging with the EntityGridView"
+date: "2011-02-17"
+tags: ['uom', 'uom-nettiers']
+draft: false
+---
+
+The EntityGridView ignores your ```AllowPaging"False"``` in the designer view.
+
+To stop the grid from paging you have to put  
+```
+GridView1.AllowPaging = false;  
+```
+in the ```Page_Load```
+
+See here for details:  
+[http://community.codesmithtools.com/nettiers/f/16/t/11405.aspx](http://community.codesmithtools.com/nettiers/f/16/t/11405.aspx)
