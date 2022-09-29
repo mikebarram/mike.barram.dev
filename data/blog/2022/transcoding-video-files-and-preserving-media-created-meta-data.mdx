@@ -30,10 +30,10 @@ This doesn't include the "Media created" property, so instead update CreationTim
 Then install [Exiftool](https://exiftool.org)
 
 At the command line, you can get a list of the time properties available in a file:  
-c:\\some folder\\"exiftool(-k).exe" -G1 -a -s -time:all d:\\Videos\\probably\_kids\_messing\_about.mp4
+```c:\\some folder\\"exiftool(-k).exe" -G1 -a -s -time:all d:\\Videos\\probably\_kids\_messing\_about.mp4```
 
 Then, you can update the meta data for all of the files in a folder like this:  
-c:\\some folder\\"exiftool(-k).exe" -api QuickTimeUTC "-CreateDate<FileCreateDate" d:\\videos\\mp4\\
+```c:\\some folder\\"exiftool(-k).exe" -api QuickTimeUTC "-CreateDate<FileCreateDate" d:\\videos\\mp4\\```
 
 The CreateDate property is updated with the value of the FileCreateProperty
 
