@@ -5,7 +5,7 @@ tags: ['uom', 'uom-mvc', 'uom-js']
 draft: false
 ---
 
-In a [previous post](https://mikebarram.wordpress.com/2014/02/27/multiline-text-editor-in-mvc/) I showed how you could set attributes on properties in an MVC model so that a text field would be edited with a multi-line HTML text box, instead of a single line input field.
+In a [previous post](https://mike.barram.dev/blog/2014/multiline-text-editor-in-mvc) I showed how you could set attributes on properties in an MVC model so that a text field would be edited with a multi-line HTML text box, instead of a single line input field.
 
 What if the you text you’re editing is HTML and you want to use an HTML editor? In the edit razor view, you could set some HTML attributes (e.g. CSS class) on the @Html.EditorFor() but you would have to do that on every view where you edit the field, and on every field that you want to use an HTML editor for. So this shows how to add an attribute to a property so that, wherever the property is edited, the HTML editor will be used.
 
@@ -26,7 +26,7 @@ public string htmlField { get; set; }
 
 That UI hint tells MVC to look for a custom editor template for that property. In this case the editor should be called \\Views\\Shared\\EditorTemplates\\WYSIWYG\_basic.cshtml
 
-[![UIhint](images/UIhint.png)](https://mikebarram.files.wordpress.com/2014/03/UIhint.png)
+[UIhint](images/UIhint.png)
 
 In this case, the editor template is simply:
 

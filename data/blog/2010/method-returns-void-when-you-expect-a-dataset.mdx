@@ -2,7 +2,7 @@
 title: "Method returns void when you expect a dataset"
 date: "2010-01-18"
 tags: ['uom', 'uom-nettiers']
-draft: false
+draft: true
 ---
 
 It’s possible to have a custom stored procedure, which is meant to return a table, that SQL Server is happy with when you “check syntax” but that is not valid (e.g. references an non-existent table). NetTiers checks the code more closely and somehow realises that the stored procedure is invalid and returns void, rather than a dataset based on the the table you were expecting. Try running the SP and you’ll see that it is invalid.
