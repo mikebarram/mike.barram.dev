@@ -1,7 +1,7 @@
 const siteMetadata = {
   title: 'Mike Barram',
   author: 'Mike Barram',
-  headerTitle: 'MikeBarram',
+  headerTitle: 'Mike Barram',
   description: "Mike Barram's work as a developer and architect",
   language: 'en-gb',
   theme: 'system', // system, dark or light
