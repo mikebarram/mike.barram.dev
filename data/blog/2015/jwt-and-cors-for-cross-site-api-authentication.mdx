@@ -31,41 +31,41 @@ If the token contains information such as Staff Id, then JWT will work especiall
 
 Creating the token was easy. I used Nuget to install the [JWT package](https://github.com/johnsheehan/jwt) and created a class for a JWT claim and a function to convert a user into a claim:
 
-[![](images/jwt1.png)](images/jwt1.png)
+[![](/images/blog/2015/jwt1.png)](/images/blog/2015/jwt1.png)
 
 Microsoft has a Nuget to provide a different [library for encoding/decoding JSON Web Tokens](https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/). They’re both pretty bad at providing usable examples – the one I used was the one I happened to get to work.
 
 I can then create a very simple Web API that requires the user to be authenticated (the \[Authorize\] attribute does this) and returns the token:
 
-[![](images/jwt2.png)](images/jwt2.png)
+[![](/images/blog/2015/jwt2.png)](/images/blog/2015/jwt2.png)
 
 The JavaScript in my (single page) application gets the token and stores it for use later on:
 
-[![](images/jwt9.png)](images/jwt9.png)
+[![](/images/blog/2015/jwt9.png)](/images/blog/2015/jwt9.png)
 
 This is the point, later on, where I want to call a method from another application. The token is added to the request header as is the Access-Control-Allow-Origin parameter, which is to keep CORS happy:
 
-[![](images/jwt10.png)](https://mikebarram.files.wordpress.com/2022/08/jwt10.png)
+[![](/images/blog/2015/jwt10.png)](/images/blog/2015/jwt10.png)
 
 On the server receiving the request, I have the same class:
 
-[![](images/jwt3-1024x177-1.png)](https://mikebarram.files.wordpress.com/2022/08/jwt3-1024x177-1.png)
+[![](/images/blog/2015/jwt3-1024x177-1.png)](/images/blog/2015/jwt3-1024x177-1.png)
 
 And I have some functions to read the token from the request header and convert it to a JwtClaim:
 
-[![](images/jwt4.png)](https://mikebarram.files.wordpress.com/2022/08/jwt4.png)
+[![](/images/blog/2015/jwt4.png)](/images/blog/2015/jwt4.png)
 
 Then I have a custom attribute filter, which, if applied to a controller class or individual method, will check the token and, optionally, check the properties of the token:
 
-[![](images/jwt5.png)](https://mikebarram.files.wordpress.com/2022/08/jwt5.png)
+[![](/images/blog/2015/jwt5.png)](/images/blog/2015/jwt5.png)
 
 Here’s that attribute filter being applied to all of the methods in a controller class. In this case I don’t just want a token, I want the user to have a PartyNumber:
 
-[![](images/jwt6.png)](https://mikebarram.files.wordpress.com/2022/08/jwt6.png)
+[![](/images/blog/2015/jwt6.png)](/images/blog/2015/jwt6.png)
 
 To solve the problem of cross-domain resource sharing, the application needs to be configured to accept CORS requests. The easiest way is in the web.config but there are fancier ways to set these custom headers, so that they are only sent in response to certain requests or to only allow origins that are in a white-list:
 
-[![](images/jwt8.png)](https://mikebarram.files.wordpress.com/2022/08/jwt8.png)
+[![](/images/blog/2015/jwt8.png)](/images/blog/2015/jwt8.png)
 
 The way that CORS works is that:
 
@@ -79,7 +79,7 @@ Some of the articles listed below go into more detail. I’d highly recommend wa
 
 A simple way to get the server to send an empty (except for the headers) response to all OPTIONS requests is to add this to the global.asax:
 
-[![](images/jwt7.png)](https://mikebarram.files.wordpress.com/2022/08/jwt7.png)
+[![](/images/blog/2015/jwt7.png)](/images/blog/2015/jwt7.png)
 
 ## Problems / Improvements to be made
 
