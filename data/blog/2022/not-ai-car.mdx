@@ -4,10 +4,10 @@ date: "2022-10-03"
 tags: ["Python"]
 draft: false
 ---
-I'd been looking for a project to work on to learn Python and AI when I came across a video about [https://www.youtube.com/watch?v=wL7tSgUpy8w](Neural network racing cars around a track). Initially, I thought creating something like that would be too hard for a first project in Python, so I started work on it.
+I'd been looking for a project to work on to learn Python and AI when I came across a video about [Neural network racing cars around a track](https://www.youtube.com/watch?v=wL7tSgUpy8w). Initially, I thought creating something like that would be too hard for a first project in Python, so I started work on it.
 
 Many of the comments on that video asked whether a trained car would do just as well on another track, so I decided to create the track dynamically with an algorithm that would produce a different track each time. Then, I added a car and calculated distances to the edge of the track and thought I should just check that it could drive by providing instructions for steering and acceleration. As I'd calculated the distances to the edge of the track, I divided those by the respective angles (positive and negative) and added them up to decide which way to steer and by how much. The distance straight ahead was ignored as it wouldn't affect steering and would resulting in dividing by zero. The acceleration instruction was based on the distance straight ahead. As with a physical car, limits were place on the inputs (rate of change of steering and acceleration/deceleration) and the capabilities of the car (maximum steering angle and speed).
 
 This was all displayed using Pygame. The driving that resulted from this was so good that I didn't see much point in using AI to better it.
 
-You can find the code and a video of the car driving on [https://github.com/mikebarram/Not-AI-Car/](Github)
+You can find the code and a video of the car driving on [Github](https://github.com/mikebarram/Not-AI-Car/)
