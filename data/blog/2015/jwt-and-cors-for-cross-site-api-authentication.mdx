@@ -31,17 +31,17 @@ If the token contains information such as Staff Id, then JWT will work especiall
 
 Creating the token was easy. I used Nuget to install the [JWT package](https://github.com/johnsheehan/jwt) and created a class for a JWT claim and a function to convert a user into a claim:
 
-[![](images/jwt1.png)](https://mikebarram.files.wordpress.com/2022/08/jwt1.png)
+[![](images/jwt1.png)](images/jwt1.png)
 
 Microsoft has a Nuget to provide a different [library for encoding/decoding JSON Web Tokens](https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt/). They’re both pretty bad at providing usable examples – the one I used was the one I happened to get to work.
 
 I can then create a very simple Web API that requires the user to be authenticated (the \[Authorize\] attribute does this) and returns the token:
 
-[![](images/jwt2.png)](https://mikebarram.files.wordpress.com/2022/08/jwt2.png)
+[![](images/jwt2.png)](images/jwt2.png)
 
 The JavaScript in my (single page) application gets the token and stores it for use later on:
 
-[![](images/jwt9.png)](https://mikebarram.files.wordpress.com/2022/08/jwt9.png)
+[![](images/jwt9.png)](images/jwt9.png)
 
 This is the point, later on, where I want to call a method from another application. The token is added to the request header as is the Access-Control-Allow-Origin parameter, which is to keep CORS happy:
 
